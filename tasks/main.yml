@@ -1,2 +1,15 @@
 ---
-# tasks file for skeleton
+- name: Load var file with package names based on the OS type
+  ansible.builtin.include_vars: "{{ lookup('first_found', params) }}"
+  vars:
+    params:
+      files:
+        - "{{ ansible_distribution }}_{{ ansible_distribution_release }}.yml"
+        - "{{ ansible_distribution }}.yml"
+        - "{{ ansible_os_family }}.yml"
+      paths:
+        - "{{ role_path }}/vars"
+
+- name: Install packages necessary for automated security updates
+  ansible.builtin.package:
+    name: "{{ package_names }}"

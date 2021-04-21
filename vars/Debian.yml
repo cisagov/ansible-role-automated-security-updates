@@ -1,0 +1,5 @@
+---
+# The packages to install for automated updates
+package_names:
+  - apt-listchanges
+  - unattended-upgrades

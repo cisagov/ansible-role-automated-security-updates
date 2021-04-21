@@ -4,7 +4,7 @@
 import os
 
 # Third-Party Libraries
-import pytest
+# import pytest
 import testinfra.utils.ansible_runner
 
 testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
@@ -12,7 +12,14 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 ).get_hosts("all")
 
 
-@pytest.mark.parametrize("x", [True])
-def test_packages(host, x):
-    """Run a dummy test, just to show what one would look like."""
-    assert x
+def test_packages(host):
+    """Test that the expected packages were installed."""
+    distribution = host.system_info.distribution
+    if distribution in ["debian", "kali", "ubuntu"]:
+        assert host.package("apt-listchanges").is_installed
+        assert host.package("unattended-upgrades").is_installed
+    elif distribution in ["amzn", "fedora"]:
+        assert host.package("dnf-automatic").is_installed
+    else:
+        # This distribution is unsupported
+        assert False, f"Distribution {distribution} is not supported."
