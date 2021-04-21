@@ -1,8 +1,8 @@
-# skeleton-ansible-role #
+# ansible-role-automated-security-updates #
 
-[![GitHub Build Status](https://github.com/cisagov/skeleton-ansible-role/workflows/build/badge.svg)](https://github.com/cisagov/skeleton-ansible-role/actions)
-[![Total alerts](https://img.shields.io/lgtm/alerts/g/cisagov/skeleton-ansible-role.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/skeleton-ansible-role/alerts/)
-[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/cisagov/skeleton-ansible-role.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/skeleton-ansible-role/context:python)
+[![GitHub Build Status](https://github.com/cisagov/ansible-role-automated-security-updates/workflows/build/badge.svg)](https://github.com/cisagov/ansible-role-automated-security-updates/actions)
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/cisagov/ansible-role-automated-security-updates.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/ansible-role-automated-security-updates/alerts/)
+[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/cisagov/ansible-role-automated-security-updates.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/ansible-role-automated-security-updates/context:python)
 
 This is a skeleton project that can be used to quickly get a new
 [cisagov](https://github.com/cisagov) Ansible role GitHub project
