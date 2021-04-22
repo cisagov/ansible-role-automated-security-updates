@@ -1,0 +1,4 @@
+---
+# The packages to install for automated updates
+package_names:
+  - yum-cron

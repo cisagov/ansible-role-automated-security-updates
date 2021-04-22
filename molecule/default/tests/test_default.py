@@ -18,8 +18,10 @@ def test_packages(host):
     if distribution in ["debian", "kali", "ubuntu"]:
         assert host.package("apt-listchanges").is_installed
         assert host.package("unattended-upgrades").is_installed
-    elif distribution in ["amzn", "fedora"]:
+    elif distribution in ["fedora"]:
         assert host.package("dnf-automatic").is_installed
+    elif distribution in ["amzn"]:
+        assert host.package("yum-cron").is_installed
     else:
         # This distribution is unsupported
         assert False, f"Distribution {distribution} is not supported."
