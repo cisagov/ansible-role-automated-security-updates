@@ -1,6 +1,7 @@
 ---
 - name: Load var file with package names based on the OS type
-  ansible.builtin.include_vars: "{{ lookup('first_found', params) }}"
+  ansible.builtin.include_vars:
+    file: "{{ lookup('first_found', params) }}"
   vars:
     params:
       files:
