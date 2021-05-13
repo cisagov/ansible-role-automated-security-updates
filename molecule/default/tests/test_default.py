@@ -16,7 +16,6 @@ def test_packages(host):
     """Test that the expected packages were installed."""
     distribution = host.system_info.distribution
     if distribution in ["debian", "kali", "ubuntu"]:
-        assert host.package("apt-listchanges").is_installed
         assert host.package("unattended-upgrades").is_installed
     elif distribution in ["fedora"]:
         assert host.package("dnf-automatic").is_installed
