@@ -1,0 +1,38 @@
+---
+# Ubuntu uses Allowed-Origins instead of Origins-Pattern in
+# /etc/apt/apt.conf.d/50unattended-upgrades, so its configuration is a
+# little different than that of Debian.
+- name: Configure unattended-upgrade
+  block:
+    - name: Add Ansible blockinfile header
+      ansible.builtin.lineinfile:
+        insertbefore: ^Unattended-Upgrade::Allowed-Origins {
+        line: // BEGIN ANSIBLE MANAGED BLOCK
+        path: /etc/apt/apt.conf.d/50unattended-upgrades
+
+    - name: Add Ansible blockinfile footer
+      ansible.builtin.lineinfile:
+        # Note that relying on firstmatch here could be a little
+        # fragile
+        firstmatch: yes
+        insertafter: ^};$
+        line: // END ANSIBLE MANAGED BLOCK
+        path: /etc/apt/apt.conf.d/50unattended-upgrades
+
+    - name: Configure unattended-upgrade to only apply security updates
+      ansible.builtin.blockinfile:
+        block: |
+          // Only autoapply security updates
+          Unattended-Upgrade::Allowed-Origins {
+              "${distro_id}:${distro_codename}-security";
+              // Extended Security Maintenance; doesn't necessarily exist for
+              // every release and this system may not have it installed, but if
+              // available, the policy for updates is such that unattended-upgrades
+              // should also install from here by default.
+              "${distro_id}ESMApps:${distro_codename}-apps-security";
+              "${distro_id}ESM:${distro_codename}-infra-security";
+          };
+        # We can't use the default marker here because the apt config
+        # files don't accept that form of commenting.
+        marker: // {mark} ANSIBLE MANAGED BLOCK
+        path: /etc/apt/apt.conf.d/50unattended-upgrades
