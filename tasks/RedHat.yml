@@ -27,8 +27,3 @@
         line: apply_updates = yes
         path: /etc/dnf/automatic.conf
         regexp: ^apply_updates = no$
-
-- name: Enable dnf-automatic service
-  ansible.builtin.service:
-    name: dnf-automatic
-    enabled: yes

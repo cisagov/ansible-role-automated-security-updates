@@ -3,3 +3,7 @@
 package_names:
   - apt-listchanges
   - unattended-upgrades
+
+# The name of the SystemD service that will perform the automated
+# security updates
+service_name: unattended-upgrades

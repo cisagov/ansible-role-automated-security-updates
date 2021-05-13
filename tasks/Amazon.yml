@@ -27,8 +27,3 @@
         line: apply_updates = yes
         path: /etc/yum/yum-cron.conf
         regexp: ^apply_updates = no$
-
-- name: Enable yum-cron service
-  ansible.builtin.service:
-    name: yum-cron
-    enabled: yes

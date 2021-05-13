@@ -26,3 +26,8 @@
         - "{{ ansible_os_family }}.yml"
       paths:
         - "{{ role_path }}/tasks"
+
+- name: Enable SystemD service that will perform the automated security updates
+  ansible.builtin.service:
+    name: "{{ service_name }}"
+    enabled: yes

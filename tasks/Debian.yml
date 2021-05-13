@@ -27,8 +27,3 @@
         # files don't accept that form of commenting.
         marker: // {mark} ANSIBLE MANAGED BLOCK
         path: /etc/apt/apt.conf.d/50unattended-upgrades
-
-- name: Enable unattended-upgrades service
-  ansible.builtin.service:
-    name: unattended-upgrades
-    enabled: yes
