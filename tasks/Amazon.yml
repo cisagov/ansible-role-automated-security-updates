@@ -8,7 +8,7 @@
         backrefs: yes
         line: update_cmd = security
         path: /etc/yum/yum-cron.conf
-        regexp: ^upgrade_type = default$
+        regexp: ^update_cmd = default$
 
     - name: Configure yum-cron to download available updates
       ansible.builtin.lineinfile:
