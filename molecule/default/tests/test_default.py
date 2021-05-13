@@ -38,3 +38,33 @@ def test_service_enabled(host):
     else:
         # This distribution is unsupported
         assert False, f"Distribution {distribution} is not supported."
+
+
+def test_service_configuration(host):
+    """Test that the automatic upgrade service is configured as expected."""
+    distribution = host.system_info.distribution
+    if distribution in ["debian", "kali"]:
+        f = host.file("/etc/apt/apt.conf.d/50unattended-upgrades")
+        assert f.exists
+        assert f.is_file
+    elif distribution in ["ubuntu"]:
+        f = host.file("/etc/apt/apt.conf.d/50unattended-upgrades")
+        assert f.exists
+        assert f.is_file
+    elif distribution in ["fedora"]:
+        f = host.file("/etc/dnf/automatic.conf")
+        assert f.exists
+        assert f.is_file
+        assert f.contains(r"^upgrade_type = security$")
+        assert f.contains(r"^download_updates = yes$")
+        assert f.contains(r"^apply_updates = yes$")
+    elif distribution in ["amzn"]:
+        f = host.file("/etc/yum/yum-cron.conf")
+        assert f.exists
+        assert f.is_file
+        assert f.contains(r"^update_cmd = security$")
+        assert f.contains(r"^download_updates = yes$")
+        assert f.contains(r"^apply_updates = yes$")
+    else:
+        # This distribution is unsupported
+        assert False, f"Distribution {distribution} is not supported."
