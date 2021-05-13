@@ -24,3 +24,17 @@ def test_packages(host):
     else:
         # This distribution is unsupported
         assert False, f"Distribution {distribution} is not supported."
+
+
+def test_service_enabled(host):
+    """Test that the automatic upgrade service exists and was enabled."""
+    distribution = host.system_info.distribution
+    if distribution in ["debian", "kali", "ubuntu"]:
+        assert host.service("unattended-upgrades").is_enabled
+    elif distribution in ["fedora"]:
+        assert host.service("dnf-automatic").is_enabled
+    elif distribution in ["amzn"]:
+        assert host.service("yum-cron").is_enabled
+    else:
+        # This distribution is unsupported
+        assert False, f"Distribution {distribution} is not supported."
