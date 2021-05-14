@@ -38,6 +38,6 @@ galaxy_info:
       versions:
         - bionic
         - focal
-  role_name: automated_updates
+  role_name: automated_security_updates
 
 dependencies: []
