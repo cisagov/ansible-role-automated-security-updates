@@ -44,13 +44,37 @@ def test_service_configuration(host):
     """Test that the automatic upgrade service is configured as expected."""
     distribution = host.system_info.distribution
     if distribution in ["debian", "kali"]:
-        f = host.file("/etc/apt/apt.conf.d/50unattended-upgrades")
+        filename = "/etc/apt/apt.conf.d/50unattended-upgrades"
+        f = host.file(filename)
         assert f.exists
         assert f.is_file
+
+        begin_regex = r"/^Unattended-Upgrade::Origins-Pattern/"
+        end_regex = r"/^};$/"
+        comment_regex = r"/^\s*\/\/.*$/d"
+        awk_command = f"BEGIN {{p = 0}}; {begin_regex} {{p = 1; next}}; {end_regex} {{p = 0; next}}; p {{print}}"
+        # The awk script extracts the contents of the Origins-Pattern
+        # clause.  The sed command removes all comments.  The grep
+        # outputs the remaining lines that contain the word security.
+        # There should be one such line.
+        full_command = f"test \"$(awk '{awk_command}' {filename} | sed '{comment_regex}' | grep --invert-match --ignore-case --fixed-strings security | wc --lines) -eq 1\""
+        assert host.run(full_command).succeeded
     elif distribution in ["ubuntu"]:
-        f = host.file("/etc/apt/apt.conf.d/50unattended-upgrades")
+        filename = "/etc/apt/apt.conf.d/50unattended-upgrades"
+        f = host.file(filename)
         assert f.exists
         assert f.is_file
+
+        begin_regex = r"/^Unattended-Upgrade::Allowed-Origins/"
+        end_regex = r"/^};$/"
+        comment_regex = r"/^\s*\/\/.*$/d"
+        awk_command = f"BEGIN {{p = 0}}; {begin_regex} {{p = 1; next}}; {end_regex} {{p = 0; next}}; p {{print}}"
+        # The awk script extracts the contents of the Origins-Pattern
+        # clause.  The sed command removes all comments.  The grep
+        # outputs the remaining lines that contain the word security.
+        # There should be three such lines.
+        full_command = f"test \"$(awk '{awk_command}' {filename} | sed '{comment_regex}' | grep --invert-match --ignore-case --fixed-strings security | wc --lines) -eq 3\""
+        assert host.run(full_command).succeeded
     elif distribution in ["fedora"]:
         f = host.file("/etc/dnf/automatic.conf")
         assert f.exists
