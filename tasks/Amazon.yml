@@ -1,0 +1,29 @@
+---
+- name: Configure yum-cron
+  block:
+    - name: Configure yum-cron to only consider security updates
+      ansible.builtin.lineinfile:
+        # This causes the line to be ignored if the regexp does not
+        # match anything.
+        backrefs: yes
+        line: update_cmd = security
+        path: /etc/yum/yum-cron.conf
+        regexp: ^update_cmd = default$
+
+    - name: Configure yum-cron to download available updates
+      ansible.builtin.lineinfile:
+        # This causes the line to be ignored if the regexp does not
+        # match anything.
+        backrefs: yes
+        line: download_updates = yes
+        path: /etc/yum/yum-cron.conf
+        regexp: ^download_updates = no$
+
+    - name: Configure yum-cron to apply available updates
+      ansible.builtin.lineinfile:
+        # This causes the line to be ignored if the regexp does not
+        # match anything.
+        backrefs: yes
+        line: apply_updates = yes
+        path: /etc/yum/yum-cron.conf
+        regexp: ^apply_updates = no$

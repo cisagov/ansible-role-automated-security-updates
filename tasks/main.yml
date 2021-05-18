@@ -1,2 +1,33 @@
 ---
-# tasks file for skeleton
+- name: Load var file with package names based on the OS type
+  ansible.builtin.include_vars:
+    file: "{{ lookup('first_found', params) }}"
+  vars:
+    params:
+      files:
+        - "{{ ansible_distribution }}_{{ ansible_distribution_release }}.yml"
+        - "{{ ansible_distribution }}.yml"
+        - "{{ ansible_os_family }}.yml"
+      paths:
+        - "{{ role_path }}/vars"
+
+- name: Install packages necessary for automated security updates
+  ansible.builtin.package:
+    name: "{{ package_names }}"
+
+- name: Include OS family- or distribution-specific configuration tasks
+  ansible.builtin.include_tasks:
+    file: "{{ lookup('first_found', params) }}"
+  vars:
+    params:
+      files:
+        - "{{ ansible_distribution }}_{{ ansible_distribution_release }}.yml"
+        - "{{ ansible_distribution }}.yml"
+        - "{{ ansible_os_family }}.yml"
+      paths:
+        - "{{ role_path }}/tasks"
+
+- name: Enable SystemD service that will perform the automated security updates
+  ansible.builtin.service:
+    name: "{{ service_name }}"
+    enabled: yes

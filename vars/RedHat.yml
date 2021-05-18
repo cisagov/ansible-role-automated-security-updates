@@ -1,0 +1,8 @@
+---
+# The packages to install for automated updates
+package_names:
+  - dnf-automatic
+
+# The name of the SystemD service that will perform the automated
+# security updates
+service_name: dnf-automatic
