@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: Shane Frasier
-  description: >
+  description: >-
     An Ansible role for for setting up automated security updates on
     Debian- and RedHat-based Linux systems.
   company: CISA Cyber Assessments
