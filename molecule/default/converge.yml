@@ -1,5 +1,7 @@
 ---
 - name: Converge
   hosts: all
-  roles:
-    - role: ansible-role-automated-security-updates
+  tasks:
+    - name: Include ansible-role-automated-security-updates
+      ansible.builtin.include_role:
+        name: ansible-role-automated-security-updates
