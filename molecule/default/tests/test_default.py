@@ -31,7 +31,7 @@ def test_service_enabled(host):
     if distribution in ["debian", "kali", "ubuntu"]:
         assert host.service("unattended-upgrades").is_enabled
     elif distribution in ["fedora"]:
-        assert host.service("dnf-automatic").is_enabled
+        assert host.service("dnf-automatic.timer").is_enabled
     elif distribution in ["amzn"]:
         assert host.service("yum-cron").is_enabled
     else:

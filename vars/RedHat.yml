@@ -5,4 +5,4 @@ package_names:
 
 # The name of the SystemD service that will perform the automated
 # security updates
-service_name: dnf-automatic
+service_name: dnf-automatic.timer
