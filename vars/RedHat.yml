@@ -3,6 +3,6 @@
 package_names:
   - dnf-automatic
 
-# The name of the SystemD service that will perform the automated
+# The name of the SystemD timer that will start the automated
 # security updates
 service_name: dnf-automatic.timer
