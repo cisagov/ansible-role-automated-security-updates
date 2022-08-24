@@ -21,7 +21,7 @@
         block: |
           // Only autoapply security updates
           Unattended-Upgrade::Origins-Pattern {
-              "origin=${distro_id},codename=${distro_codename},label=${distro_id}-Security";
+              "origin=${distro_id},label=${distro_id}-Security";
           };
         # We can't use the default marker here because the apt config
         # files don't accept that form of commenting.
