@@ -1,8 +1,7 @@
 # ansible-role-automated-security-updates #
 
 [![GitHub Build Status](https://github.com/cisagov/ansible-role-automated-security-updates/workflows/build/badge.svg)](https://github.com/cisagov/ansible-role-automated-security-updates/actions)
-[![Total alerts](https://img.shields.io/lgtm/alerts/g/cisagov/ansible-role-automated-security-updates.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/ansible-role-automated-security-updates/alerts/)
-[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/cisagov/ansible-role-automated-security-updates.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/ansible-role-automated-security-updates/context:python)
+[![CodeQL](https://github.com/cisagov/ansible-role-automated-security-updates/workflows/CodeQL/badge.svg)](https://github.com/cisagov/ansible-role-automated-security-updates/actions/workflows/codeql-analysis.yml)
 
 This is an Ansible role that sets up automated security updates on
 Debian- and RedHat-based Linux systems.
@@ -34,8 +33,10 @@ Here's how to use it in a playbook:
 - hosts: all
   become: yes
   become_method: sudo
-  roles:
-    - automated_security_updates
+  tasks:
+    - name: Configure automated security updates
+      ansible.builtin.include_role:
+        name: automated_security_updates
 ```
 
 ## Contributing ##
