@@ -15,8 +15,6 @@ lint: |
   ansible-lint
   flake8
 platforms:
-  # Amazon Linux 2023 does not current offer
-  # yum packages which are required for this role
   - cgroupns_mode: host
     command: /lib/systemd/systemd
     image: geerlingguy/docker-amazonlinux2023-ansible:latest

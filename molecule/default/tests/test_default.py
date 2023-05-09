@@ -16,7 +16,7 @@ def test_packages(host):
     distribution = host.system_info.distribution
     if distribution in ["debian", "kali", "ubuntu"]:
         assert host.package("unattended-upgrades").is_installed
-    elif distribution in ["fedora", "amzn"]:
+    elif distribution in ["amzn", "fedora"]:
         assert host.package("dnf-automatic").is_installed
     else:
         # This distribution is unsupported
@@ -28,7 +28,7 @@ def test_service_enabled(host):
     distribution = host.system_info.distribution
     if distribution in ["debian", "kali", "ubuntu"]:
         assert host.service("unattended-upgrades").is_enabled
-    elif distribution in ["fedora", "amzn"]:
+    elif distribution in ["amzn", "fedora"]:
         assert host.service("dnf-automatic.timer").is_enabled
     else:
         # This distribution is unsupported
@@ -70,7 +70,7 @@ def test_service_configuration(host):
         # There should be three such lines.
         full_command = f"test \"$(awk '{awk_command}' {filename} | sed '{comment_regex}' | grep --invert-match --ignore-case --fixed-strings security | wc --lines) -eq 3\""
         assert host.run(full_command).succeeded
-    elif distribution in ["fedora", "amzn"]:
+    elif distribution in ["amzn", "fedora"]:
         f = host.file("/etc/dnf/automatic.conf")
         assert f.exists
         assert f.is_file
