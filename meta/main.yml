@@ -21,9 +21,11 @@ galaxy_info:
   min_ansible_version: "2.10"
   namespace: cisagov
   platforms:
-    - name: Amazon Linux 2023
-      versions:
-        - any
+  # Amazon Linux 2023 does not currently offer yum packages
+  # which are required for this role
+  #  - name: Amazon Linux 2023
+  #    versions:
+  #      - any
     - name: Debian
       versions:
         - buster
