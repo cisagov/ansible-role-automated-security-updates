@@ -17,15 +17,15 @@ lint: |
 platforms:
   # Amazon Linux 2023 does not current offer
   # yum packages which are required for this role
-  # - cgroupns_mode: host
-  #   command: /lib/systemd/systemd
-  #   image: geerlingguy/docker-amazonlinux2023-ansible:latest
-  #   name: amazonlinux2023-systemd
-  #   platform: amd64
-  #   pre_build_image: yes
-  #   privileged: yes
-  #   volumes:
-  #     - /sys/fs/cgroup:/sys/fs/cgroup:rw
+  - cgroupns_mode: host
+    command: /lib/systemd/systemd
+    image: geerlingguy/docker-amazonlinux2023-ansible:latest
+    name: amazonlinux2023-systemd
+    platform: amd64
+    pre_build_image: yes
+    privileged: yes
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
   - cgroupns_mode: host
     command: /lib/systemd/systemd
     image: geerlingguy/docker-debian10-ansible:latest

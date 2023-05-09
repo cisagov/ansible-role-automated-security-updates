@@ -23,9 +23,9 @@ galaxy_info:
   platforms:
   # Amazon Linux 2023 does not currently offer yum packages
   # which are required for this role
-  #  - name: Amazon Linux 2023
-  #    versions:
-  #      - any
+    - name: Amazon Linux 2023
+      versions:
+        - any
     - name: Debian
       versions:
         - buster

@@ -1,29 +1,29 @@
 ---
-- name: Configure yum-cron
+- name: Configure dnf-automatic
   block:
-    - name: Configure yum-cron to only consider security updates
+    - name: Configure dnf-automatic to only consider security updates
       ansible.builtin.lineinfile:
         # This causes the line to be ignored if the regexp does not
         # match anything.
         backrefs: yes
-        line: update_cmd = security
-        path: /etc/yum/yum-cron.conf
-        regexp: ^update_cmd = default$
+        line: upgrade_type = security
+        path: /etc/dnf/automatic.conf
+        regexp: ^upgrade_type = default$
 
-    - name: Configure yum-cron to download available updates
+    - name: Configure dnf-automatic to download available updates
       ansible.builtin.lineinfile:
         # This causes the line to be ignored if the regexp does not
         # match anything.
         backrefs: yes
         line: download_updates = yes
-        path: /etc/yum/yum-cron.conf
+        path: /etc/dnf/automatic.conf
         regexp: ^download_updates = no$
 
-    - name: Configure yum-cron to apply available updates
+    - name: Configure dnf-automatic to apply available updates
       ansible.builtin.lineinfile:
         # This causes the line to be ignored if the regexp does not
         # match anything.
         backrefs: yes
         line: apply_updates = yes
-        path: /etc/yum/yum-cron.conf
+        path: /etc/dnf/automatic.conf
         regexp: ^apply_updates = no$

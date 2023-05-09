@@ -1,8 +1,8 @@
 ---
 # The packages to install for automated updates
 package_names:
-  - yum-cron
+  - dnf-automatic
 
-# The name of the SystemD service that will perform the automated
+# The name of the SystemD timer that will start the automated
 # security updates
-service_name: yum-cron
+service_name: dnf-automatic.timer
