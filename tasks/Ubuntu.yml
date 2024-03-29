@@ -14,7 +14,7 @@
       ansible.builtin.lineinfile:
         # Note that relying on firstmatch here could be a little
         # fragile
-        firstmatch: yes
+        firstmatch: true
         insertafter: ^};$
         line: // END ANSIBLE MANAGED BLOCK
         path: /etc/apt/apt.conf.d/50unattended-upgrades
