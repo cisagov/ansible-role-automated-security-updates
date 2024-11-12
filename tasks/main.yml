@@ -1,13 +1,11 @@
 ---
-- name: Load var file with package names based on the OS type
+- name: Load var file with package names based on the package manager
   ansible.builtin.include_vars:
     file: "{{ lookup('first_found', params) }}"
   vars:
     params:
       files:
-        - "{{ ansible_distribution }}_{{ ansible_distribution_release }}.yml"
-        - "{{ ansible_distribution }}.yml"
-        - "{{ ansible_os_family }}.yml"
+        - "{{ ansible_pkg_mgr }}.yml"
       paths:
         - "{{ role_path }}/vars"
 
@@ -15,15 +13,18 @@
   ansible.builtin.package:
     name: "{{ package_names }}"
 
-- name: Include OS family- or distribution-specific configuration tasks
+- name: >-
+    Include package manager and (possibly) OS family- or
+    distribution-specific configuration tasks
   ansible.builtin.include_tasks:
     file: "{{ lookup('first_found', params) }}"
   vars:
     params:
       files:
-        - "{{ ansible_distribution }}_{{ ansible_distribution_release }}.yml"
-        - "{{ ansible_distribution }}.yml"
-        - "{{ ansible_os_family }}.yml"
+        - "{{ ansible_pkg_mgr }}_{{ ansible_distribution }}_{{ ansible_distribution_release }}.yml"
+        - "{{ ansible_pkg_mgr }}_{{ ansible_distribution }}.yml"
+        - "{{ ansible_pkg_mgr }}_{{ ansible_os_family }}.yml"
+        - "{{ ansible_pkg_mgr }}.yml"
       paths:
         - "{{ role_path }}/tasks"
 
