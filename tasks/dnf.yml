@@ -2,28 +2,31 @@
 - name: Configure dnf-automatic
   block:
     - name: Configure dnf-automatic to only consider security updates
-      ansible.builtin.lineinfile:
-        # This causes the line to be ignored if the regexp does not
-        # match anything.
-        backrefs: true
-        line: upgrade_type = security
+      community.general.ini_file:
+        group: root
+        mode: 0644
+        option: upgrade_type
+        owner: root
         path: /etc/dnf/automatic.conf
-        regexp: ^upgrade_type = default$
+        section: commands
+        value: security
 
     - name: Configure dnf-automatic to download available updates
-      ansible.builtin.lineinfile:
-        # This causes the line to be ignored if the regexp does not
-        # match anything.
-        backrefs: true
-        line: download_updates = yes
+      community.general.ini_file:
+        group: root
+        mode: 0644
+        option: download_updates
+        owner: root
         path: /etc/dnf/automatic.conf
-        regexp: ^download_updates = no$
+        section: commands
+        value: true
 
     - name: Configure dnf-automatic to apply available updates
-      ansible.builtin.lineinfile:
-        # This causes the line to be ignored if the regexp does not
-        # match anything.
-        backrefs: true
-        line: apply_updates = yes
+      community.general.ini_file:
+        group: root
+        mode: 0644
+        option: apply_updates
+        owner: root
         path: /etc/dnf/automatic.conf
-        regexp: ^apply_updates = no$
+        section: commands
+        value: true
