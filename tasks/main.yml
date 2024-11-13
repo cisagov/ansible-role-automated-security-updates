@@ -1,10 +1,15 @@
 ---
-- name: Load var file with package names based on the package manager
+- name: >-
+    Load var file with package names based on the package manager and
+    (possibly) OS family- or distribution-specific configuration
   ansible.builtin.include_vars:
     file: "{{ lookup('first_found', params) }}"
   vars:
     params:
       files:
+        - "{{ ansible_pkg_mgr }}_{{ ansible_distribution }}_{{ ansible_distribution_release }}.yml"
+        - "{{ ansible_pkg_mgr }}_{{ ansible_distribution }}.yml"
+        - "{{ ansible_pkg_mgr }}_{{ ansible_os_family }}.yml"
         - "{{ ansible_pkg_mgr }}.yml"
       paths:
         - "{{ role_path }}/vars"
