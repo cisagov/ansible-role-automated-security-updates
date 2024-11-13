@@ -1,32 +1,14 @@
 ---
 - name: Configure dnf-automatic
-  block:
-    - name: Configure dnf-automatic to only consider security updates
-      community.general.ini_file:
-        group: root
-        mode: 0644
-        option: upgrade_type
-        owner: root
-        path: /etc/dnf/automatic.conf
-        section: commands
-        value: security
-
-    - name: Configure dnf-automatic to download available updates
-      community.general.ini_file:
-        group: root
-        mode: 0644
-        option: download_updates
-        owner: root
-        path: /etc/dnf/automatic.conf
-        section: commands
-        value: true
-
-    - name: Configure dnf-automatic to apply available updates
-      community.general.ini_file:
-        group: root
-        mode: 0644
-        option: apply_updates
-        owner: root
-        path: /etc/dnf/automatic.conf
-        section: commands
-        value: true
+  community.general.ini_file:
+    group: root
+    mode: 0644
+    option: "{{ item.option }}"
+    owner: root
+    path: /etc/dnf/automatic.conf
+    section: commands
+    value: "{{ item.value }}"
+  loop:
+    - {option: apply_updates, value: true}
+    - {option: download_updates, value: true}
+    - {option: upgrade_type, value: security}
