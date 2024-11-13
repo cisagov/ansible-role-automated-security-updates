@@ -1,6 +1,7 @@
 """Module containing the tests for the default scenario."""
 
 # Standard Python Libraries
+import configparser
 import os
 
 # Third-Party Libraries
@@ -14,10 +15,13 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 def test_packages(host):
     """Test that the expected packages were installed."""
     distribution = host.system_info.distribution
+    codename = host.system_info.codename
     if distribution in ["debian", "kali", "ubuntu"]:
         assert host.package("unattended-upgrades").is_installed
-    elif distribution in ["amzn", "fedora"]:
+    elif distribution in ["amzn", "fedora"] and codename not in ["41"]:
         assert host.package("dnf-automatic").is_installed
+    elif distribution in ["fedora"] and codename in ["41"]:
+        assert host.package("dnf5-plugin-automatic").is_installed
     else:
         # This distribution is unsupported
         assert False, f"Distribution {distribution} is not supported."
@@ -26,10 +30,13 @@ def test_packages(host):
 def test_service_enabled(host):
     """Test that the automatic upgrade service exists and was enabled."""
     distribution = host.system_info.distribution
+    codename = host.system_info.codename
     if distribution in ["debian", "kali", "ubuntu"]:
         assert host.service("unattended-upgrades").is_enabled
-    elif distribution in ["amzn", "fedora"]:
+    elif distribution in ["amzn", "fedora"] and codename not in ["41"]:
         assert host.service("dnf-automatic.timer").is_enabled
+    elif distribution in ["fedora"] and codename in ["41"]:
+        assert host.service("dnf5-automatic.timer").is_enabled
     else:
         # This distribution is unsupported
         assert False, f"Distribution {distribution} is not supported."
@@ -71,12 +78,19 @@ def test_service_configuration(host):
         full_command = f"test \"$(awk '{awk_command}' {filename} | sed '{comment_regex}' | grep --invert-match --ignore-case --fixed-strings security | wc --lines) -eq 3\""
         assert host.run(full_command).succeeded
     elif distribution in ["amzn", "fedora"]:
-        f = host.file("/etc/dnf/automatic.conf")
+        filename = "/etc/dnf/automatic.conf"
+        f = host.file(filename)
         assert f.exists
         assert f.is_file
-        assert f.contains(r"^upgrade_type = security$")
-        assert f.contains(r"^download_updates = yes$")
-        assert f.contains(r"^apply_updates = yes$")
+        config = configparser.ConfigParser()
+        config.read_string(f.content_string, filename)
+        assert "commands" in config.sections()
+        assert "upgrade_type" in config["commands"]
+        assert config["commands"]["upgrade_type"] == "security"
+        assert "download_updates" in config["commands"]
+        assert config["commands"]["download_updates"]
+        assert "apply_updates" in config["commands"]
+        assert config["commands"]["apply_updates"]
     else:
         # This distribution is unsupported
         assert False, f"Distribution {distribution} is not supported."
