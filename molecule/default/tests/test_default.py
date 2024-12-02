@@ -15,12 +15,16 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 def test_packages(host):
     """Test that the expected packages were installed."""
     distribution = host.system_info.distribution
-    codename = host.system_info.codename
+    release = host.system_info.release
     if distribution in ["debian", "kali", "ubuntu"]:
         assert host.package("unattended-upgrades").is_installed
-    elif distribution in ["amzn", "fedora"] and codename not in ["41"]:
+    elif distribution in ["amzn", "fedora"] and not any(
+        [release.startswith(version) for version in ["41"]]
+    ):
         assert host.package("dnf-automatic").is_installed
-    elif distribution in ["fedora"] and codename in ["41"]:
+    elif distribution in ["fedora"] and any(
+        [release.startswith(version) for version in ["41"]]
+    ):
         assert host.package("dnf5-plugin-automatic").is_installed
     else:
         # This distribution is unsupported
@@ -30,12 +34,16 @@ def test_packages(host):
 def test_service_enabled(host):
     """Test that the automatic upgrade service exists and was enabled."""
     distribution = host.system_info.distribution
-    codename = host.system_info.codename
+    release = host.system_info.release
     if distribution in ["debian", "kali", "ubuntu"]:
         assert host.service("unattended-upgrades").is_enabled
-    elif distribution in ["amzn", "fedora"] and codename not in ["41"]:
+    elif distribution in ["amzn", "fedora"] and not any(
+        [release.startswith(version) for version in ["41"]]
+    ):
         assert host.service("dnf-automatic.timer").is_enabled
-    elif distribution in ["fedora"] and codename in ["41"]:
+    elif distribution in ["fedora"] and any(
+        [release.startswith(version) for version in ["41"]]
+    ):
         assert host.service("dnf5-automatic.timer").is_enabled
     else:
         # This distribution is unsupported
