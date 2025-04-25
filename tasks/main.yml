@@ -7,7 +7,9 @@
   vars:
     params:
       files:
-        - "{{ ansible_pkg_mgr }}_{{ ansible_distribution }}_{{ ansible_distribution_release }}.yml"
+        - >-
+          {{ ansible_pkg_mgr }}_{{ ansible_distribution }}_{{
+          ansible_distribution_release }}.yml
         - "{{ ansible_pkg_mgr }}_{{ ansible_distribution }}.yml"
         - "{{ ansible_pkg_mgr }}_{{ ansible_os_family }}.yml"
         - "{{ ansible_pkg_mgr }}.yml"
@@ -26,7 +28,9 @@
   vars:
     params:
       files:
-        - "{{ ansible_pkg_mgr }}_{{ ansible_distribution }}_{{ ansible_distribution_release }}.yml"
+        - >-
+          {{ ansible_pkg_mgr }}_{{ ansible_distribution }}_{{
+          ansible_distribution_release }}.yml
         - "{{ ansible_pkg_mgr }}_{{ ansible_distribution }}.yml"
         - "{{ ansible_pkg_mgr }}_{{ ansible_os_family }}.yml"
         - "{{ ansible_pkg_mgr }}.yml"
