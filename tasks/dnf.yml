@@ -9,6 +9,9 @@
     section: commands
     value: "{{ item.value }}"
   loop:
-    - {option: apply_updates, value: true}
-    - {option: download_updates, value: true}
-    - {option: upgrade_type, value: security}
+    - option: apply_updates
+      value: true
+    - option: download_updates
+      value: true
+    - option: upgrade_type
+      value: security
