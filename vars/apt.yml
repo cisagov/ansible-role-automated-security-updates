@@ -3,6 +3,6 @@
 package_names:
   - unattended-upgrades
 
-# The name of the SystemD service that will perform the automated
+# The name of the systemd service that will perform the automated
 # security updates
 service_name: unattended-upgrades
