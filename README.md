@@ -1,6 +1,7 @@
 # ansible-role-automated-security-updates #
 
 [![GitHub Build Status](https://github.com/cisagov/ansible-role-automated-security-updates/workflows/build/badge.svg)](https://github.com/cisagov/ansible-role-automated-security-updates/actions)
+[![License](https://img.shields.io/github/license/cisagov/ansible-role-automated-security-updates)](https://spdx.org/licenses/)
 [![CodeQL](https://github.com/cisagov/ansible-role-automated-security-updates/workflows/CodeQL/badge.svg)](https://github.com/cisagov/ansible-role-automated-security-updates/actions/workflows/codeql-analysis.yml)
 
 This is an Ansible role that sets up automated security updates on
