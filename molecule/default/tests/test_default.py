@@ -23,7 +23,7 @@ def test_packages(host):
         assert host.package("dnf5-plugin-automatic").is_installed
     else:
         # This distribution is unsupported
-        assert False, f"Distribution {distribution} is not supported."
+        raise AssertionError(f"Distribution {distribution} is not supported.")
 
 
 def test_service_enabled(host):
@@ -37,7 +37,7 @@ def test_service_enabled(host):
         assert host.service("dnf5-automatic.timer").is_enabled
     else:
         # This distribution is unsupported
-        assert False, f"Distribution {distribution} is not supported."
+        raise AssertionError(f"Distribution {distribution} is not supported.")
 
 
 def test_service_configuration(host):
@@ -91,4 +91,4 @@ def test_service_configuration(host):
         assert config["commands"]["apply_updates"]
     else:
         # This distribution is unsupported
-        assert False, f"Distribution {distribution} is not supported."
+        raise AssertionError(f"Distribution {distribution} is not supported.")
