@@ -47,5 +47,6 @@ galaxy_info:
       versions:
         - jammy
         - noble
+        - resolute
   role_name: automated_security_updates
   standalone: true
