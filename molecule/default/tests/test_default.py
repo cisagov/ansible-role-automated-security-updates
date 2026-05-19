@@ -52,12 +52,20 @@ def test_service_configuration(host):
         begin_regex = r"/^Unattended-Upgrade::Origins-Pattern/"
         end_regex = r"/^};$/"
         comment_regex = r"/^\s*\/\/.*$/d"
-        awk_command = f"BEGIN {{p = 0}}; {begin_regex} {{p = 1; next}}; {end_regex} {{p = 0; next}}; p {{print}}"
+        awk_command = (
+            f"BEGIN {{p = 0}}; {begin_regex} {{p = 1; next}}; {end_regex} "
+            "{{p = 0; next}}; p {{print}}"
+        )
         # The awk script extracts the contents of the Origins-Pattern
         # clause.  The sed command removes all comments.  The grep
         # outputs the remaining lines that contain the word security.
         # There should be one such line.
-        full_command = f"test \"$(awk '{awk_command}' {filename} | sed '{comment_regex}' | grep --invert-match --ignore-case --fixed-strings security | wc --lines) -eq 1\""
+        full_command = (
+            f"test \"$(awk '{awk_command}' {filename} | "
+            f"sed '{comment_regex}' | "
+            "grep --invert-match --ignore-case --fixed-strings security | "
+            'wc --lines) -eq 1"'
+        )
         assert host.run(full_command).succeeded
     elif distribution in ["ubuntu"]:
         filename = "/etc/apt/apt.conf.d/50unattended-upgrades"
@@ -68,12 +76,20 @@ def test_service_configuration(host):
         begin_regex = r"/^Unattended-Upgrade::Allowed-Origins/"
         end_regex = r"/^};$/"
         comment_regex = r"/^\s*\/\/.*$/d"
-        awk_command = f"BEGIN {{p = 0}}; {begin_regex} {{p = 1; next}}; {end_regex} {{p = 0; next}}; p {{print}}"
+        awk_command = (
+            f"BEGIN {{p = 0}}; {begin_regex} {{p = 1; next}}; {end_regex} "
+            "{{p = 0; next}}; p {{print}}"
+        )
         # The awk script extracts the contents of the Origins-Pattern
         # clause.  The sed command removes all comments.  The grep
         # outputs the remaining lines that contain the word security.
         # There should be three such lines.
-        full_command = f"test \"$(awk '{awk_command}' {filename} | sed '{comment_regex}' | grep --invert-match --ignore-case --fixed-strings security | wc --lines) -eq 3\""
+        full_command = (
+            f"test \"$(awk '{awk_command}' {filename} | "
+            f"sed '{comment_regex}' | "
+            "grep --invert-match --ignore-case --fixed-strings security | "
+            'wc --lines) -eq 3"'
+        )
         assert host.run(full_command).succeeded
     elif distribution in ["amzn", "fedora"]:
         filename = "/etc/dnf/automatic.conf"
